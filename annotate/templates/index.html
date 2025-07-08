@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Text Annotation Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📝 Text Annotation Tool</h1>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Select a file to begin</div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- File Selection -->
+            <div class="file-selection" id="fileSelection">
+                <h2>Select CSV File to Annotate</h2>
+                <p class="shuffle-info">🔀 Articles and phrases will be automatically shuffled for unbiased annotation</p>
+                <div class="file-list" id="fileList">
+                    <div class="loading">Loading files...</div>
+                </div>
+            </div>
+
+            <!-- Annotation Interface -->
+            <div class="annotation-interface" id="annotationInterface" style="display: none;">
+                <div class="content-card">
+                    <div class="metadata" id="metadata"></div>
+                    <div class="phrase-container">
+                        <div class="phrase-label">📝 Phrase to Annotate (Randomized Order):</div>
+                        <div class="phrase-text" id="contentText">
+                            Loading phrase...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button class="annotation-btn no-btn" id="noBtn" onclick="annotate(0)">
+                        <span class="btn-icon">❌</span>
+                        <span class="btn-text">No</span>
+                        <span class="btn-shortcut">← Left Arrow</span>
+                    </button>
+                    <button class="annotation-btn yes-btn" id="yesBtn" onclick="annotate(1)">
+                        <span class="btn-icon">✅</span>
+                        <span class="btn-text">Yes</span>
+                        <span class="btn-shortcut">→ Right Arrow</span>
+                    </button>
+                </div>
+
+                <div class="controls">
+                    <button class="control-btn" onclick="exportAnnotations()">
+                        📥 Export Results
+                    </button>
+                    <button class="control-btn" onclick="resetProgress()">
+                        🔄 Reset Progress
+                    </button>
+                    <button class="control-btn" onclick="goToFileSelection()">
+                        📁 Change File
+                    </button>
+                </div>
+            </div>
+
+            <!-- Completion Message -->
+            <div class="completion-message" id="completionMessage" style="display: none;">
+                <h2>🎉 Phrase Annotation Complete!</h2>
+                <p>You have finished annotating all phrases in this file.</p>
+                <div class="controls">
+                    <button class="control-btn primary" onclick="exportAnnotations()">
+                        📥 Export Results
+                    </button>
+                    <button class="control-btn" onclick="goToFileSelection()">
+                        📁 Select Another File
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Status Messages -->
+        <div class="status-message" id="statusMessage"></div>
+
+        <!-- Export Modal -->
+        <div class="modal" id="exportModal" style="display: none;">
+            <div class="modal-content">
+                <h3>Export Results</h3>
+                <div id="exportStatus">Preparing export...</div>
+                <div class="modal-buttons">
+                    <button class="control-btn" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html> 
